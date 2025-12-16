@@ -7,7 +7,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # mlflow.set_tracking_uri("http://127.0.0.1:5000")
-dagshub.init(repo_owner="Maan-py", repo_name="SMSML_Muhammad-Luqmaan", mlflow=True)
+dagshub.init(
+    repo_owner=os.environ["DAGSHUB_USER"],
+    repo_name="SMSML_Muhammad-Luqmaan",
+    mlflow=True
+)
 mlflow.set_experiment("UNSW_NB15_Basic")
 
 df = pd.read_csv("UNSW_NB15_preprocessing/UNSW_NB15_preprocessed.csv")
