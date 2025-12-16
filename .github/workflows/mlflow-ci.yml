@@ -36,7 +36,7 @@ jobs:
 
     - name: Run MLflow Project (Training)
       run: |
-        mlflow run MLproject --env-manager=local
+        mlflow run MLproject/MLproject --env-manager=local
 
     - name: Track mlruns with Git LFS
       run: |
