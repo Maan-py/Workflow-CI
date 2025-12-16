@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 # mlflow.set_tracking_uri("http://127.0.0.1:5000")
 dagshub.init(
-    repo_owner=os.environ["DAGSHUB_TOKEN"],
+    repo_owner="Maan-py", 
     repo_name="SMSML_Muhammad-Luqmaan",
     mlflow=True
 )
