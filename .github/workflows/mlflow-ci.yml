@@ -35,6 +35,11 @@ jobs:
         pip install mlflow scikit-learn pandas numpy dagshub
 
     - name: Run MLflow Project (Training)
+      env:
+        DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+        MLFLOW_TRACKING_URI: https://dagshub.com/Maan-py/SMSML_Muhammad-Luqmaan.mlflow
+        MLFLOW_TRACKING_USERNAME: Maan-py
+        MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
         cd MLProject
         mlflow run . --env-manager=local
