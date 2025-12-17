@@ -43,26 +43,16 @@ jobs:
           mlflow run . --env-manager=local
 
       - name: Get latest MLflow run_id
+        id: get_run_id
+        working-directory: MLProject
         run: |
-          # Ambil experiment ID numerik terbaru > 0
-          LATEST_EXPERIMENT=$(find mlruns -maxdepth 1 -mindepth 1 -type d -name '[1-9]*' | sort -r | head -n 1)
-          if [ -z "$LATEST_EXPERIMENT" ]; then
-              echo "No valid numeric experiment found (excluding 0)"
-              exit 1
-          fi
-          LATEST_EXPERIMENT_ID=$(basename "$LATEST_EXPERIMENT")
+          # Baca Run ID dari file yang dibuat oleh script Python
+          RUN_ID=$(cat run_id.txt)
 
-          # Ambil run ID terbaru
-          LATEST_RUN=$(find "$LATEST_EXPERIMENT" -maxdepth 1 -mindepth 1 -type d -name '[0-9a-f]*' | sort -r | head -n 1)
-          if [ -z "$LATEST_RUN" ]; then
-              echo "No run found in experiment $LATEST_EXPERIMENT_ID"
-              exit 1
-          fi
-          LATEST_RUN_ID=$(basename "$LATEST_RUN")
+          echo "Run ID ditemukan: $RUN_ID"
 
-          echo "Latest experiment ID: $LATEST_EXPERIMENT_ID"
-          echo "Latest run ID: $LATEST_RUN_ID"
-          echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
+          # Simpan ke Environment Variable GitHub
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
 
       - name: Upload MLflow artifacts to LFS
         run: |

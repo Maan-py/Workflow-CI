@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+# mlflow.set_tracking_uri("http://127.0.0.1:5000")
 # dagshub.init(repo_owner="Maan-py", repo_name="SMSML_Muhammad-Luqmaan", mlflow=True)
 # mlflow.set_experiment("UNSW_NB15_Basic")
 
@@ -36,8 +36,10 @@ y_pred = model.predict(X_test)
 acc = accuracy_score(y_test, y_pred)
 print("Accuracy:", acc)
 
+run_id = mlflow.active_run().info.run_id
+with open("run_id.txt", "w") as f:
+    f.write(run_id)
+
 mlflow.sklearn.log_model(
-    sk_model=model,
-    artifact_path="model",
-    registered_model_name=None
+    sk_model=model, artifact_path="model", registered_model_name=None
 )
