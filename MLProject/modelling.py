@@ -12,9 +12,13 @@ dagshub.init(
     repo_owner="Maan-py", 
     repo_name="SMSML_Muhammad-Luqmaan",
     mlflow=True,
-    token=os.environ.get("DAGSHUB_TOKEN")
 )
+
+mlflow.set_tracking_uri("https://dagshub.com/Maan-py/SMSML_Muhammad-Luqmaan.mlflow")
 mlflow.set_experiment("UNSW_NB15_Basic")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = "Maan-py"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ.get("DAGSHUB_TOKEN")
 
 df = pd.read_csv("UNSW_NB15_preprocessing/UNSW_NB15_preprocessed.csv")
 
