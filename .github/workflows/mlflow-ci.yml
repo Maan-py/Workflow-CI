@@ -26,6 +26,11 @@ jobs:
         with:
           python-version: 3.12.7
 
+      - name: Install Conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+
       - name: Install dependencies
         run: |
           pip install --upgrade pip
