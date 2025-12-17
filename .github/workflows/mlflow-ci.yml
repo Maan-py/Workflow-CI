@@ -38,8 +38,8 @@ jobs:
 
       - name: Run MLflow project
         id: run_ml
+        working-directory: workflow-CI/MLProject
         run: |
-          cd workflow-CI/MLProject
           mlflow run . --env-manager=local
 
       - name: Get latest MLflow run_id
