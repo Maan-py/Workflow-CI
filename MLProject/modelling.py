@@ -22,7 +22,12 @@ dagshub.init(
     repo_name="SMSML_Muhammad-Luqmaan",
     mlflow=True,
 )
+# MLflow tracking
+mlflow.set_tracking_uri("https://dagshub.com/Maan-py/SMSML_Muhammad-Luqmaan.mlflow")
+os.environ["MLFLOW_TRACKING_USERNAME"] = "Maan-py"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ.get("DAGSHUB_TOKEN")
 
+# Pastikan experiment ada
 experiment_name = "UNSW_NB15_Basic"
 experiment = mlflow.get_experiment_by_name(experiment_name)
 if experiment is None:
