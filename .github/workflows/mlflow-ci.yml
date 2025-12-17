@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install mlflow scikit-learn pandas numpy docker
+          pip install mlflow scikit-learn pandas numpy dagshub
 
       - name: Run MLflow project
         id: run_ml
