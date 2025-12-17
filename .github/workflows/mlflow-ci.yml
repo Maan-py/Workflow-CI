@@ -34,7 +34,7 @@ jobs:
       - name: Run MLflow project
         id: run_ml
         run: |
-          RUN_ID=$(mlflow run MLProject --env-manager=local --experiment-name workflow-ci -q --no-conda -e main | grep "Run ID:" | awk '{print $NF}')
+          RUN_ID=$(mlflow run MLProject --experiment-name workflow-ci -e main | grep "Run ID:" | awk '{print $NF}')
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run ID: $RUN_ID"
 
