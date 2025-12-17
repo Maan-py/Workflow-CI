@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-mlflow.set_tracking_uri("file:./mlruns")  # atau sqlite backend
+mlflow.set_tracking_uri("sqlite:///mlflow.db")  # atau sqlite backend
 mlflow.set_experiment("workflow-ci")
 
 df = pd.read_csv("UNSW_NB15_preprocessing/UNSW_NB15_preprocessed.csv")
