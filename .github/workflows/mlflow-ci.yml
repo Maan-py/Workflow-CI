@@ -45,11 +45,9 @@ jobs:
       - name: Get latest MLflow run_id
         run: |
           # Ambil folder eksperimen numerik terbaru
-          LATEST_EXPERIMENT=$(ls -1td mlruns/[0-9]* | head -n 1 | xargs -n 1 basename)
-
-          # Ambil run ID terbaru (32-char hex folder) di dalam eksperimen
-          LATEST_RUN_ID=$(ls -1d mlruns/$LATEST_EXPERIMENT/* | grep -E '^[0-9a-f]{32}$' | head -n 1)
-
+          LATEST_EXPERIMENT=$(find mlruns -maxdepth 1 -mindepth 1 -type d -name '[0-9]*' | sort -r | head -n 1 | xargs -n 1 basename)
+          # Ambil run ID terbaru (32 karakter hex folder) di dalam eksperimen
+          LATEST_RUN_ID=$(find mlruns/$LATEST_EXPERIMENT -maxdepth 1 -mindepth 1 -type d -name '[0-9a-f]*' | sort -r | head -n 1 | xargs -n 1 basename)
           echo "Latest experiment ID: $LATEST_EXPERIMENT"
           echo "Latest run ID: $LATEST_RUN_ID"
           echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
