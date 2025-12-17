@@ -64,8 +64,6 @@ jobs:
           echo "Latest run ID: $LATEST_RUN_ID"
           echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
 
-
-
       - name: Upload MLflow artifacts to LFS
         run: |
           git config user.name "github-actions[bot]"
