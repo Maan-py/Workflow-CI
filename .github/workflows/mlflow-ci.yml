@@ -46,8 +46,7 @@ jobs:
         run: |
           LATEST_EXPERIMENT=$(ls -1t mlruns | head -n 1)
 
-          # Ambil latest run folder di dalam experiment tersebut
-          LATEST_RUN=$(ls -1t mlruns/$LATEST_EXPERIMENT | head -n 1)
+          LATEST_RUN_ID=$(ls -1td mlruns/$EXPERIMENT_ID/* | head -n 1 | xargs -n 1 basename)
 
           echo "Latest run ID: $LATEST_RUN"
           echo "RUN_ID=$LATEST_RUN" >> $GITHUB_ENV
