@@ -39,13 +39,17 @@ jobs:
       - name: Run MLflow project
         id: run_ml
         run: |
-          RUN_ID=$(mlflow run MLProject -e main --env-manager=local | grep "Run ID:" | awk '{print $NF}')
-          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          echo "Latest run ID: $RUN_ID"
+          mlflow run MLproject --env-manager=local
 
       - name: Get latest MLflow run_id
         run: |
-          echo "Run ID: $RUN_ID"
+          LATEST_EXPERIMENT=$(ls -1t mlruns | head -n 1)
+
+          # Ambil latest run folder di dalam experiment tersebut
+          LATEST_RUN=$(ls -1t mlruns/$LATEST_EXPERIMENT | head -n 1)
+
+          echo "Latest run ID: $LATEST_RUN"
+          echo "RUN_ID=$LATEST_RUN" >> $GITHUB_ENV
 
       - name: Upload MLflow artifacts to LFS
         run: |
