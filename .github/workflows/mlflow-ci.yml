@@ -2,7 +2,7 @@ name: CI MLflow with Docker and LFS
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   mlflow-docker-lfs:
