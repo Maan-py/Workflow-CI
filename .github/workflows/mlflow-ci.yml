@@ -40,7 +40,8 @@ jobs:
       # Run MLflow Project
       - name: Run mlflow project
         run: |
-          mlflow run MLProject --env-manager=local
+          RUN_ID=$(mlflow run MLProject --env-manager=local -q --no-conda --experiment-name workflow-ci -e main | grep "Run ID:" | awk '{print $NF}')
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
 
       # Get latest MLflow run_id
       - name: Get latest MLflow run_id
@@ -64,7 +65,7 @@ jobs:
       - name: Build Docker Model
         run: |
           mlflow models build-docker \
-          --model-uri "mlruns/$EXPERIMENT_ID/$RUN_ID/artifacts/model" \
+          --model-uri "runs:/$RUN_ID/model" \
           --name "unsw-nb15-model"
 
       # Log in to Docker Hub
