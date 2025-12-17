@@ -45,8 +45,16 @@ jobs:
       # Get latest MLflow run_id
       - name: Get latest MLflow run_id
         run: |
-          RUN_ID=$(find mlruns -type d -path "*/artifacts/model" | head -n 1 | awk -F'/' '{print $(NF-2)}') 
+          MODEL_PATH=$(find mlruns -type d -path "*/artifacts/model" | head -n 1)
+
+          RUN_ID=$(echo $MODEL_PATH | awk -F'/' '{print $(NF-2)}')
+          EXPERIMENT_ID=$(echo $MODEL_PATH | awk -F'/' '{print $(NF-3)}')
+
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          echo "EXPERIMENT_ID=$EXPERIMENT_ID" >> $GITHUB_ENV
+
+          echo "Experiment ID: $EXPERIMENT_ID"
+          echo "Run ID: $RUN_ID"
 
       - name: Track mlruns with Git LFS
         run: |
@@ -59,7 +67,7 @@ jobs:
       - name: Build Docker Model
         run: |
           mlflow models build-docker \
-          --model-uri "mlruns/*/$RUN_ID/artifacts/model" \
+          --model-uri "mlruns/$EXPERIMENT_ID/$RUN_ID/artifacts/model" \
           --name unsw-nb15-model
 
       # Log in to Docker Hub
