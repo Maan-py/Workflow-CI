@@ -38,7 +38,7 @@ jobs:
 
       - name: Run MLflow project
         id: run_ml
-        working-directory: workflow-CI/MLProject
+        working-directory: MLProject
         run: |
           mlflow run . --env-manager=local
 
