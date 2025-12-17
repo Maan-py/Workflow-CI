@@ -5,10 +5,6 @@ on:
     branches: [master]
   workflow_dispatch:
 
-env:
-  DAGSHUB_USERNAME: Maan-py
-  DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
-
 permissions:
   contents: write
 
@@ -39,6 +35,9 @@ jobs:
         pip install mlflow scikit-learn pandas numpy dagshub
 
     - name: Run MLflow Project (Training)
+      env:
+        DAGSHUB_USERNAME: Maan-py
+        DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
         cd MLProject
         mlflow run . --env-manager=local
