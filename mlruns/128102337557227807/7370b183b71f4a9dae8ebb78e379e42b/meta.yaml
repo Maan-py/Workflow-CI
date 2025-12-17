@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/128102337557227807/7370b183b71f4a9dae8ebb78e379e42b/artifacts
+end_time: 1765940003466
+entry_point_name: ''
+experiment_id: '128102337557227807'
+lifecycle_stage: active
+run_id: 7370b183b71f4a9dae8ebb78e379e42b
+run_name: UNSW_NB15_Basic_Run
+run_uuid: 7370b183b71f4a9dae8ebb78e379e42b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765939980886
+status: 3
+tags: []
+user_id: Maan
