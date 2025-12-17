@@ -44,13 +44,25 @@ jobs:
 
       - name: Get latest MLflow run_id
         run: |
-          # Ambil folder eksperimen numerik terbaru
-          LATEST_EXPERIMENT=$(find mlruns -maxdepth 1 -mindepth 1 -type d -name '[0-9]*' | sort -r | head -n 1 | xargs -n 1 basename)
-          # Ambil run ID terbaru (32 karakter hex folder) di dalam eksperimen
-          LATEST_RUN_ID=$(find mlruns/$LATEST_EXPERIMENT -maxdepth 1 -mindepth 1 -type d -name '[0-9a-f]*' | sort -r | head -n 1 | xargs -n 1 basename)
-          echo "Latest experiment ID: $LATEST_EXPERIMENT"
+          # Ambil experiment numerik terbaru
+          LATEST_EXPERIMENT=$(find mlruns -maxdepth 1 -mindepth 1 -type d -name '[0-9]*' | sort -r | head -n 1)
+          if [ -z "$LATEST_EXPERIMENT" ]; then
+              echo "No numeric experiment found"
+              exit 1
+          fi
+          LATEST_EXPERIMENT_ID=$(basename "$LATEST_EXPERIMENT")
+          # Ambil run ID terbaru di experiment tersebut
+          LATEST_RUN=$(find "$LATEST_EXPERIMENT" -maxdepth 1 -mindepth 1 -type d -name '[0-9a-f]*' | sort -r | head -n 1)
+          if [ -z "$LATEST_RUN" ]; then
+              echo "No run found in experiment $LATEST_EXPERIMENT_ID"
+              exit 1
+          fi
+          LATEST_RUN_ID=$(basename "$LATEST_RUN")
+          echo "Latest experiment ID: $LATEST_EXPERIMENT_ID"
           echo "Latest run ID: $LATEST_RUN_ID"
+          # Set GitHub Actions environment variable
           echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
+
 
       - name: Upload MLflow artifacts to LFS
         run: |
