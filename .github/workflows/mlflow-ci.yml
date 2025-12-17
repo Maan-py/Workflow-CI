@@ -39,6 +39,10 @@ jobs:
       - name: Run MLflow project
         id: run_ml
         working-directory: MLProject
+        env:
+          # Paksa MLflow menulis ke folder mlruns di direktori root project
+          MLFLOW_TRACKING_URI: file://${{ github.workspace }}/mlruns
+          MLFLOW_EXPERIMENT_NAME: workflow-ci
         run: |
           mlflow run . --env-manager=local
 
