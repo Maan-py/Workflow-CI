@@ -3,6 +3,7 @@ name: CI MLflow with Docker and LFS
 on:
   push:
     branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -64,7 +65,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git lfs install
           git lfs track "mlruns/**"
-          git add .gitattributes
+          git add .
+          git add --all
           git commit -m "Track large files in mlruns with Git LFS" || true
           git push origin master
 
@@ -82,12 +84,12 @@ jobs:
 
       - name: Tag Docker Image
         run: |
-          docker tag unsw-nb15-model maanpy/smsml_muhammad-luqmaan:tagname
+          docker tag unsw-nb15-model maanpy/smsml_muhammad-luqmaan:msml_unsw-nb15
 
       # 13. Push Docker Image
       - name: Push Docker Image
         run: |
-          docker push maanpy/smsml_muhammad-luqmaan:tagname
+          docker push maanpy/smsml_muhammad-luqmaan:msml_unsw-nb15
 
       # 17. Complete job
       - name: Complete job
