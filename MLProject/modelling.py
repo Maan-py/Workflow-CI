@@ -44,7 +44,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-with mlflow.start_run():
+with mlflow.start_run(run_name="UNSW_NB15_Basic_Run"):
     mlflow.sklearn.autolog()
 
     model = RandomForestClassifier()
