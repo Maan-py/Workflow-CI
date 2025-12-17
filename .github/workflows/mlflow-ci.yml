@@ -45,11 +45,11 @@ jobs:
       - name: Get latest MLflow run_id
         run: |
           LATEST_EXPERIMENT=$(ls -1t mlruns | head -n 1)
-
+          EXPERIMENT_ID=$LATEST_EXPERIMENT
           LATEST_RUN_ID=$(ls -1td mlruns/$EXPERIMENT_ID/* | head -n 1 | xargs -n 1 basename)
+          echo "Latest run ID: $LATEST_RUN_ID"
+          echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
 
-          echo "Latest run ID: $LATEST_RUN"
-          echo "RUN_ID=$LATEST_RUN" >> $GITHUB_ENV
 
       - name: Upload MLflow artifacts to LFS
         run: |
