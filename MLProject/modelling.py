@@ -11,7 +11,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 dagshub.init(
     repo_owner="Maan-py", 
     repo_name="SMSML_Muhammad-Luqmaan",
-    mlflow=True
+    mlflow=True,
+    token=os.environ.get("DAGSHUB_TOKEN")
 )
 mlflow.set_experiment("UNSW_NB15_Basic")
 
