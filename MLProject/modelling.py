@@ -16,16 +16,17 @@ if DAGSHUB_TOKEN:
 else:
     print("DAGSHUB_TOKEN not found in environment variables.")
 
+# MLflow tracking
+mlflow.set_tracking_uri("https://dagshub.com/Maan-py/SMSML_Muhammad-Luqmaan.mlflow")
+os.environ["MLFLOW_TRACKING_USERNAME"] = "Maan-py"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ.get("DAGSHUB_TOKEN")
+
 # mlflow.set_tracking_uri("http://127.0.0.1:5000")
 dagshub.init(
     repo_owner="Maan-py", 
     repo_name="SMSML_Muhammad-Luqmaan",
     mlflow=True,
 )
-# MLflow tracking
-mlflow.set_tracking_uri("https://dagshub.com/Maan-py/SMSML_Muhammad-Luqmaan.mlflow")
-os.environ["MLFLOW_TRACKING_USERNAME"] = "Maan-py"
-os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ.get("DAGSHUB_TOKEN")
 
 # Pastikan experiment ada
 experiment_name = "UNSW_NB15_Basic"
