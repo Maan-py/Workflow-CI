@@ -46,8 +46,10 @@ jobs:
         run: |
           # Ambil folder eksperimen numerik terbaru
           LATEST_EXPERIMENT=$(ls -1td mlruns/[0-9]* | head -n 1 | xargs -n 1 basename)
-          # Ambil run ID terbaru di dalam eksperimen tersebut
-          LATEST_RUN_ID=$(ls -1td mlruns/$LATEST_EXPERIMENT/* | head -n 1 | xargs -n 1 basename)
+
+          # Ambil run ID terbaru (32-char hex folder) di dalam eksperimen
+          LATEST_RUN_ID=$(ls -1d mlruns/$LATEST_EXPERIMENT/* | grep -E '^[0-9a-f]{32}$' | head -n 1)
+
           echo "Latest experiment ID: $LATEST_EXPERIMENT"
           echo "Latest run ID: $LATEST_RUN_ID"
           echo "RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
