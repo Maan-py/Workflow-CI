@@ -59,7 +59,10 @@ jobs:
       # Build Docker Model
       - name: Build Docker Model
         run: |
-          mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "unsw-nb15-model"
+          RUN_ID=$(ls mlruns/0 | head -n 1)
+          mlflow models build-docker \
+            --model-uri "mlruns/0/$RUN_ID/artifacts/model" \
+            --name "unsw-nb15-model"
 
       # Log in to Docker Hub
       - name: Log in to Docker Hub
