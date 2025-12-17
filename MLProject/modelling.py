@@ -7,12 +7,27 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
+DAGSHUB_TOKEN = os.environ.get('DAGSHUB_TOKEN', None)
+
+if DAGSHUB_TOKEN:
+    # Authenticate to DagsHub
+    dagshub.auth.add_app_token(DAGSHUB_TOKEN)
+    print("Successfully authenticated with DagsHub.")
+else:
+    print("DAGSHUB_TOKEN not found in environment variables.")
+
 # mlflow.set_tracking_uri("http://127.0.0.1:5000")
 dagshub.init(
     repo_owner="Maan-py", 
     repo_name="SMSML_Muhammad-Luqmaan",
     mlflow=True,
 )
+
+experiment_name = "UNSW_NB15_Basic"
+experiment = mlflow.get_experiment_by_name(experiment_name)
+if experiment is None:
+    mlflow.create_experiment(experiment_name)
+mlflow.set_experiment(experiment_name)
 
 df = pd.read_csv("UNSW_NB15_preprocessing/UNSW_NB15_preprocessed.csv")
 
