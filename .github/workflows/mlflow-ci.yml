@@ -11,7 +11,7 @@ permissions:
 jobs:
   train-and-deploy:
     runs-on: ubuntu-latest
-    environment: secrets
+    environment: github-actions
 
     steps:
     - name: Checkout repository
