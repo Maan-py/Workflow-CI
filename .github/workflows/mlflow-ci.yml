@@ -52,14 +52,13 @@ jobs:
       # 9. Upload to GitHub (LFS)
       - name: Upload MLflow artifacts to LFS
         run: |
-          EXPERIMENT_DIR=$(ls -1 mlruns | grep -v '^0$\|\.trash\|models' | sort | tail -n 1)
-          echo "EXPERIMENT ID: $EXPERIMENT_DIR"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git lfs install
-          git add -f mlruns/$EXPERIMENT_DIR/$RUN_ID
-          git commit -m "Add MLflow run $RUN_ID artifacts to LFS" || echo "No changes to commit"
-          git push
+          git lfs track "mlruns/**"
+          git add .gitattributes
+          git commit -m "Track large files in mlruns with Git LFS" || true
+          git push origin master
 
       # 10. Build Docker Model
       - name: Build Docker Model
