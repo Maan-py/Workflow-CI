@@ -5,6 +5,10 @@ on:
     branches: [master]
   workflow_dispatch:
 
+env:
+  DAGSHUB_USERNAME: Maan-py
+  DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+
 permissions:
   contents: write
 
